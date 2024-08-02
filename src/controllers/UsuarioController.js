@@ -1,8 +1,8 @@
 const padraoEmail = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
 const padraoDataNascimento = /^\d{4}-\d{2}-\d{2}$/;
 const Usuario = require('../models/Usuario')
-const Local = require('../models/Local');
-const Atividade = require('../models/Atividade');
+// const Local = require('../models/Local');
+// const Atividade = require('../models/Atividade');
 
 class UsuarioController {
 
@@ -159,15 +159,15 @@ class UsuarioController {
     async listarUsuarios(request, response) {
         try {
             const usuarios = await Usuario.findAll({
-                include: {
-                    model: Local,
-                    as: 'locais',
-                    attributes: [ 'id','nome', 'descricao', 'cep', 'logradouro', 'municipio', 'uf' ],
-                    include: {
-                        model: Atividade,
-                        through: { attributes: [] }
-                    }
-                }
+                // include: {
+                //     model: Local,
+                //     as: 'locais',
+                //     attributes: [ 'id','nome', 'descricao', 'cep', 'logradouro', 'municipio', 'uf' ],
+                //     include: {
+                //         model: Atividade,
+                //         through: { attributes: [] }
+                //     }
+                // }
             })
 
             if (!(usuarios)) {
