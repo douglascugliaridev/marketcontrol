@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
 const {hashSync} = require('bcryptjs');
-const Local = require("./Local");
+// const Lista = require("./Lista");
 
 const Usuario = connection.define('usuarios', {
     nome: {
@@ -42,8 +42,8 @@ const Usuario = connection.define('usuarios', {
     }
 })
 
- Local.belongsTo(Usuario);
- Usuario.hasMany(Local);
+//  Lista.belongsTo(Usuario);
+//  Usuario.hasMany(Lista);
 
 
 Usuario.beforeSave((usuario) => {
