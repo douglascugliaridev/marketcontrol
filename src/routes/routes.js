@@ -6,6 +6,7 @@ const routes = new Router()
 
 const usuariosRoutes = require('./usuarios.routes')
 const loginRoutes = require('./login.routes')
+const supermercadoRoutes = require('./supermercado.routes')
 const validaToken = require('../middlewares/validaToken')
 
 
@@ -18,6 +19,7 @@ routes.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 // Privadas
 routes.use(validaToken)
+routes.use('/supermercados', supermercadoRoutes)
 
 
 module.exports = routes
