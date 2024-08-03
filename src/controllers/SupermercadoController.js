@@ -1,4 +1,6 @@
 const Supermercado = require('../models/Supermercado')
+const produto = require('../models/Produto')
+const lista = require('../models/Lista')
 
 class SupermercadoController {
     async cadastrarSupermercado(req, res) {
@@ -18,9 +20,7 @@ class SupermercadoController {
             res.status(201).json({mensagem: 'Supermercado criado com sucesso', supermercado})
 
         } catch (error) {
-            if (!supermercado) {
-                return res.status(500).json({ mensagem: 'Erro ao cadastrar supermercado' })
-            }
+            return res.status(500).json({ mensagem: 'Erro ao cadastrar supermercado' })
         }
     }
 
@@ -35,9 +35,7 @@ class SupermercadoController {
             return res.status(200).json(supermercados)
 
         } catch (error) {
-            if (!supermercados) {
-                return res.status(500).json({ mensagem: 'Erro ao consultar supermercados' })
-            }
+            return res.status(500).json({ mensagem: 'Erro ao consultar supermercados' })
         }
     }
 
@@ -49,20 +47,25 @@ class SupermercadoController {
                 return res.status(400).json({ mensagem: 'ID obrigatório' })
             }   
 
-            // TODO: Verificar se o supermercado não esta vinculado a uma lista
+            const produtos = await produto.findAll({ where: { supermercadoId: id } })
+            const listas = await lista.findAll({ where: { supermercadoId: id } })
 
-            const supermercado = await Supermercado.destroy({ where: { id } })
-            
-            if (!supermercado) {
+            if (produtos.length > 0 || listas.length > 0) {
+                return res.status(400).json({ mensagem: 'Supermercado contém produtos ou listas vinculados' })
+            }
+
+            const supermercadoDeletar = await Supermercado.findByPk(id)
+
+            if (!supermercadoDeletar) {
                 return res.status(404).json({ mensagem: 'Supermercado não encontrado' })
             }
 
+            await Supermercado.destroy({ where: { id } })
+            
             return res.status(204).json()
 
         } catch (error) {
-            if (!supermercado) {
-                return res.status(500).json({ mensagem: 'Erro ao excluir supermercado' })
-            }
+            return res.status(500).json({ mensagem: 'Erro ao excluir supermercado' })
         }
     }
     
@@ -88,9 +91,7 @@ class SupermercadoController {
             return res.status(200).json({ mensagem: 'Supermercado atualizado com sucesso' })    
 
         } catch (error) {
-            if (!supermercado) {
-                return res.status(500).json({ mensagem: 'Erro ao atualizar supermercado' })
-            }
+            return res.status(500).json({ mensagem: 'Erro ao atualizar supermercado' })
         }
     }
 }
