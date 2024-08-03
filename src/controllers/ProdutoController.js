@@ -25,9 +25,8 @@ class ProdutoController {
             res.status(201).json({mensagem: 'Produto criado com sucesso', produto})
 
         } catch (error) {
-           if (error) {
-                return res.status(500).json({ mensagem: 'Erro ao cadastrar supermercado', error })
-            }
+            return res.status(500).json({ mensagem: 'Erro ao cadastrar supermercado', error })
+           
         }
     }
 
@@ -42,9 +41,7 @@ class ProdutoController {
             return res.status(200).json(produtos)
 
         } catch (error) {
-            if (!produtos) {
-                return res.status(500).json({ mensagem: 'Erro ao consultar supermercados' })
-            }
+            return res.status(500).json({ mensagem: 'Erro ao consultar supermercados' })            
         }
     }
 
@@ -73,9 +70,7 @@ class ProdutoController {
             return res.status(204).json()   
 
         } catch (error) {
-            if (!produtos) {
-                return res.status(500).json({ mensagem: 'Erro ao excluir supermercado' })
-            }
+            return res.status(500).json({ mensagem: 'Erro ao excluir supermercado' })            
         }
     }
 
@@ -103,9 +98,7 @@ class ProdutoController {
             return res.status(200).json({ mensagem: 'Produtos atualizado com sucesso' })        
 
         } catch (error) {
-            if (!produtos) {
-                return res.status(500).json({ mensagem: 'Erro ao atualizar supermercado' })
-            }
+            return res.status(500).json({ mensagem: 'Erro ao atualizar supermercado' })
         }
     }   
 }
